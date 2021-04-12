@@ -9,11 +9,11 @@ using ToDoList.Models;
 
 namespace ToDoList.Controllers
 {
-    public class HomeController : Controller
+    public class ToDoController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ToDoController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public ToDoController(ILogger<ToDoController> logger)
         {
             _logger = logger;
         }
@@ -23,10 +23,6 @@ namespace ToDoList.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
