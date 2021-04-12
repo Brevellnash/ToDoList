@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToDoList.Models;
+using ToDoList.Services;
 
 namespace ToDoList
 {
@@ -24,6 +27,12 @@ namespace ToDoList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.Configure<ToDoDatabaseSettings>(
+                Configuration.GetSection(nameof(ToDoDatabaseSettings)));
+            services.AddSingleton<IToDoDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<ToDoDatabaseSettings>>().Value);
+
+            services.AddSingleton<ToDoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
