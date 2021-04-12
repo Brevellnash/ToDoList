@@ -1,7 +1,4 @@
 ﻿@model ToDoListViewModel
-@{
-    ViewData["Title"] = "Home Page";
-}
 
 <div class="text-center">
     <h1 class="display-4">@Model.Title</h1>
@@ -9,6 +6,7 @@
             {
                 <h3>@task.Title</h3>
                 <p>@task.Description</p>
+                <a asp-action="Edit" asp-route-id="@task.Id" class=" btn btn-secondary">Update</a>
             }
 
 </div>

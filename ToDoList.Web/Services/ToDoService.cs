@@ -51,7 +51,21 @@ namespace ToDoList.Web.Services
             }
             return listOftasks;
         }
-            
+
+        public async Task<ToDoTask> GetAsyncById(string id)
+        {
+            try
+            {
+                var item = await _toDoTasks.FindAsync(toDoTask => string.Equals(toDoTask.Id, id));
+                return item.First();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Exception encountered when trying to retrieve task with id: {id}", id);
+            }
+            return null;
+
+        }
     }
 
 }

@@ -35,6 +35,19 @@ namespace ToDoList.Controllers
             return View("Index", new ToDoListViewModel() { Title = "Completed Tasks", Tasks = closedTasks });
         }
 
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var item = await _toDoService.GetAsyncById(id);
+            if (item == null){
+                return NotFound();
+            }
+            return View(item);
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
