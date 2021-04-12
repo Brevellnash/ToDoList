@@ -1,6 +1,6 @@
 using System;
 
-namespace ToDoList.Models
+namespace ToDoList.Web.Models
 {
     public class ErrorViewModel
     {
