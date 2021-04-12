@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToDoList.Models;
-using ToDoList.Services;
+using ToDoList.Web.Models;
+using ToDoList.Web.Services;
 
 namespace ToDoList
 {
@@ -31,6 +32,8 @@ namespace ToDoList
                 Configuration.GetSection(nameof(ToDoDatabaseSettings)));
             services.AddSingleton<IToDoDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<ToDoDatabaseSettings>>().Value);
+
+            services.AddLogging();
 
             services.AddSingleton<ToDoService>();
         }
