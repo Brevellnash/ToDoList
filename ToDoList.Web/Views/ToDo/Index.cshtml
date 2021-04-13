@@ -2,11 +2,21 @@
 
 <div class="text-center">
     <h1 class="display-4">@Model.Title</h1>
-    @foreach(var task in Model.Tasks)
-            {
-                <h3>@task.Title</h3>
-                <p>@task.Description</p>
+    <a asp-action="Create" class=" btn btn-secondary">Create new task</a>
+    <hr />
+    @foreach (var task in Model.Tasks)
+    {
+        <h3>@task.Title</h3>
+        <p>@task.Description</p>
+        <div class="row">
+            <div class="col">
                 <a asp-action="Edit" asp-route-id="@task.Id" class=" btn btn-secondary">Update</a>
-            }
+            </div>
+            <div class="col">
+                <a asp-action="Delete" asp-route-id="@task.Id" class=" btn btn-secondary">Delete</a>
+            </div>
+        </div>
+        <hr />
+    }
 
 </div>

@@ -55,18 +55,51 @@ namespace ToDoList.Controllers
             {
                 return NotFound();
             }
-            var res = await _toDoService.UpdateAsync(todo);
-            if (res)
+            var success = await _toDoService.UpdateAsync(todo);
+            if (success)
             {
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return BadRequest("Could not update task");
-            }
+            return BadRequest("Could not update task, please try again");
         }
 
+        public async Task<IActionResult> Delete (string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var item = await _toDoService.GetAsyncById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return View(item);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(ToDoTask todo)
+        {
+            if (string.IsNullOrEmpty(todo.Id))
+            {
+                return NotFound();
+            }
+            var success = await _toDoService.DeleteAsync(todo.Id);
+            if (success)
+            {
+                return RedirectToAction("Index");
+            }
+            return BadRequest("Could not delete the task, please try again");
+        }
+
+        public ViewResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ToDoTask todo)
+        {
+            await _toDoService.CreateAsync(todo);
+            return RedirectToAction("Index");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

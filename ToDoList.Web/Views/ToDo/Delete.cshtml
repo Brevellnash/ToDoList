@@ -1,0 +1,8 @@
+﻿@model ToDoTask
+
+<h2>Are you sure you want to delete the task: @Model.Title</h2>
+<hr />
+<form asp-action="Delete" method="post">
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="Index">Cancel</a>
+</form>
