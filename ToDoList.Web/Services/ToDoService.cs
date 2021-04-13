@@ -70,6 +70,35 @@ namespace ToDoList.Web.Services
             return false;
         }
 
+        public async Task<bool> DeleteAsync(string id)
+        {
+            try
+            {
+                var result = await _toDoTasks.DeleteOneAsync(td => td.Id.Equals(id));
+                if(result.IsAcknowledged && result.DeletedCount > 0)
+                {
+                    return true;
+                }
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Exception encountered when trying to delete task with id {id}", id);
+            }
+            return false;
+        }
+
+        public async Task CreateAsync(ToDoTask todo)
+        {
+            try
+            {
+                await _toDoTasks.InsertOneAsync(todo);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Exception encounted when inserting new task with Title {todo.Title}", todo.Title);
+            }
+        }
+
         public async Task<ToDoTask> GetAsyncById(string id)
         {
             try
