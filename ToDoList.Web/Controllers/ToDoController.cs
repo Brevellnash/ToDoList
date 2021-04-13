@@ -48,6 +48,24 @@ namespace ToDoList.Controllers
             return View(item);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, ToDoTask todo)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+            var res = await _toDoService.UpdateAsync(todo);
+            if (res)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return BadRequest("Could not update task");
+            }
+        }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
