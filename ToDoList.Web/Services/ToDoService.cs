@@ -52,6 +52,24 @@ namespace ToDoList.Web.Services
             return listOftasks;
         }
 
+        public async Task<bool> UpdateAsync(ToDoTask todo)
+        {
+            try
+            {
+                var updateFilter = Builders<ToDoTask>.Filter.Eq(td => td.Id, todo.Id);
+                var result =  await _toDoTasks.ReplaceOneAsync(updateFilter, todo);
+                if(result.IsAcknowledged && result.ModifiedCount > 0)
+                {
+                    return true;
+                }
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Exception encountered when trying to replace task with id {id}", todo.Id);
+            }
+            return false;
+        }
+
         public async Task<ToDoTask> GetAsyncById(string id)
         {
             try

@@ -1,10 +1,24 @@
 ﻿@model ToDoTask
 
 <div class="text-center">
-    <h1 class="display-4">Editing Task: @Model.Title</h1>
+    <h3>Editing Task: @Model.Title</h3>
   
-        <h3>@Model.Title</h3>
-        <p>@Model.Description</p>
-        <p>@Model.Completed</p>
+    <form asp-action="Edit">
+        <div class="form-group">
+            <label asp-for="Title" class="control-label">Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label">Description</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        @Html.CheckBoxFor(m => m.Completed) Complete this task
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-secondary" />
+        </div>
+    </form>
  
 </div>
