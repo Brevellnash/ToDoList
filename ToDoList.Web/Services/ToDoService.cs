@@ -20,7 +20,10 @@ namespace ToDoList.Web.Services
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Gets all tasks from the database that have been completed
+        /// </summary>
+        /// <returns>List of ToDoTask object representing the tasks or null on error</returns>
         public async Task<List<ToDoTask>> GetAsyncClosedTasks()
         {
             List<ToDoTask> listOftasks = new List<ToDoTask>();
@@ -32,11 +35,15 @@ namespace ToDoList.Web.Services
             catch(Exception e)
             {
                 _logger.LogError(e, "Exception encountered when trying to retrieve the closed tasks");
+                return null;
             }
             return listOftasks;
         }
-           
 
+        /// <summary>
+        /// Gets all tasks from the database that have not yet been completed
+        /// </summary>
+        /// <returns>List of ToDoTask objects that represent the tasks</returns>
         public async Task<List<ToDoTask>> GetAsyncOpenTasks()
         {
             List<ToDoTask> listOftasks = new List<ToDoTask>();
@@ -48,10 +55,16 @@ namespace ToDoList.Web.Services
             catch (Exception e)
             {
                 _logger.LogError(e, "Exception encountered when trying to retrieve the open tasks");
+                return null;
             }
             return listOftasks;
         }
 
+        /// <summary>
+        /// Updates the task with id todo.Id in database to match the input variable todo
+        /// </summary>
+        /// <param name="todo">input task to be updated</param>
+        /// <returns>boolean value representing success</returns>
         public async Task<bool> UpdateAsync(ToDoTask todo)
         {
             try
@@ -70,6 +83,11 @@ namespace ToDoList.Web.Services
             return false;
         }
 
+        /// <summary>
+        /// Deletes the task with Id = id in the database
+        /// </summary>
+        /// <param name="id">the database id of the item to delete</param>
+        /// <returns>boolean value representing success</returns>
         public async Task<bool> DeleteAsync(string id)
         {
             try
@@ -87,18 +105,30 @@ namespace ToDoList.Web.Services
             return false;
         }
 
-        public async Task CreateAsync(ToDoTask todo)
+        /// <summary>
+        /// Creates a new Task in the database with the values present in the input variable
+        /// </summary>
+        /// <param name="todo">The task to be added to the database</param>
+        /// <returns>boolean value representing the successful execution of operation</returns>
+        public async Task<bool> CreateAsync(ToDoTask todo)
         {
             try
             {
                 await _toDoTasks.InsertOneAsync(todo);
+                return true;
             }
             catch(Exception e)
             {
                 _logger.LogError(e, "Exception encounted when inserting new task with Title {todo.Title}", todo.Title);
+                return false;
             }
         }
 
+        /// <summary>
+        /// Gets a specific task with Id = id from the database
+        /// </summary>
+        /// <param name="id">the database id of the item you want to retrieve</param>
+        /// <returns>the ToDoTaskmodel feel f</returns>
         public async Task<ToDoTask> GetAsyncById(string id)
         {
             try
